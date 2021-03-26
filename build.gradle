@@ -1,0 +1,65 @@
+plugins {
+    id "groovy"
+    id "io.micronaut.library" version "1.2.0"
+    id "maven-publish"
+}
+
+version = "0.1"
+group = "pl.mkjb"
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId 'pl.mkjb'
+            artifactId 'test-helper'
+            version '0.1'
+            from components.java
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+micronaut {
+    testRuntime("spock2")
+    processing {
+        incremental true
+        annotations "pl.mkjb.*"
+        sourceSets {
+            main {
+                java {
+                    srcDirs = []
+                }
+                groovy {
+                    srcDirs = ['src/main/groovy', 'src/main/java']
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    annotationProcessor("org.projectlombok:lombok")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut.gcp:micronaut-gcp-pubsub")
+    compile("org.spockframework:spock-core:$spockCoreVersion")
+    compile("io.micronaut.test:micronaut-test-spock:$micronautSpockVersion")
+    compile("org.testcontainers:mongodb:$testContainerVersion")
+    compile("org.testcontainers:gcloud:$testContainerVersion")
+
+    compileOnly("org.projectlombok:lombok")
+    runtimeOnly("ch.qos.logback:logback-classic")
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion("11")
+    targetCompatibility = JavaVersion.toVersion("11")
+    withJavadocJar()
+    withSourcesJar()
+}
+
+
+

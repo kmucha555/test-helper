@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: pl.mkjb
+testFramework: spock
+sourceLanguage: java
+buildTool: gradle
+features: [annotation-api, app-name, gradle, http-client, java, java-application, logback, lombok, netty-server, readme, shade, spock, testcontainers, yaml]
